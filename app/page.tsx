@@ -99,7 +99,7 @@ export default function Home() {
   return (
     <div className="container">
       <div className="greeting">
-        Hello, {nickname}, you use telegram miniapp. v1.1
+        Hello, {nickname}, you use telegram miniapp. v1.2
       </div>
     </div>
   )
