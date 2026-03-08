@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Image from "next/image"
 import { 
   getTelegramWebApp, 
   isTelegramWebApp, 
@@ -81,6 +82,14 @@ export default function Home() {
   if (!isReady) {
     return (
       <div className="container">
+        <Image
+          src="/greeting.png"
+          alt=""
+          fill
+          className="container__bg"
+          priority
+          sizes="100vw"
+        />
         <div className="greeting">Loading...</div>
       </div>
     )
@@ -89,6 +98,14 @@ export default function Home() {
   if (!isInTelegram) {
     return (
       <div className="container">
+        <Image
+          src="/greeting.png"
+          alt=""
+          fill
+          className="container__bg"
+          priority
+          sizes="100vw"
+        />
         <div className="greeting">Hello, Anonymous, go to telegram plz</div>
       </div>
     )
@@ -98,6 +115,14 @@ export default function Home() {
 
   return (
     <div className="container">
+      <Image
+        src="/greeting.png"
+        alt=""
+        fill
+        className="container__bg"
+        priority
+        sizes="100vw"
+      />
       <div className="greeting">
         Hello, {nickname}, you use telegram miniapp. v1.2
       </div>
