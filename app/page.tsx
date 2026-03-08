@@ -6,14 +6,18 @@ import {
   getTelegramWebApp, 
   isTelegramWebApp, 
   getTelegramUser,
-  initTelegramWebApp 
+  initTelegramWebApp,
+  getTelegramInitData
 } from "@/lib/telegram"
 import type { TelegramUser } from "@/types/telegram"
+import { authService } from "@/services/auth-service"
 
 export default function Home() {
   const [user, setUser] = useState<TelegramUser | null>(null)
   const [isInTelegram, setIsInTelegram] = useState(false)
   const [isReady, setIsReady] = useState(false)
+  const [authMessage, setAuthMessage] = useState<string | null>(null)
+  const [authError, setAuthError] = useState<string | null>(null)
 
   useEffect(() => {
     let clickHandler: (() => void) | null = null
@@ -27,6 +31,19 @@ export default function Home() {
         initTelegramWebApp()
         const telegramUser = getTelegramUser()
         setUser(telegramUser)
+
+        // Authenticate with backend
+        // Use initData if available, otherwise use test token x-0
+        const initData = getTelegramInitData() || 'x-0'
+        authService.authenticate(initData)
+          .then((response) => {
+            setAuthMessage(response.message)
+            setAuthError(null)
+          })
+          .catch((error) => {
+            setAuthError(error.message || 'Authentication failed')
+            setAuthMessage(null)
+          })
 
         const webApp = getTelegramWebApp()
         if (webApp) {
@@ -125,6 +142,16 @@ export default function Home() {
       />
       <div className="greeting">
         Hello, {nickname}, you use telegram miniapp. v1.2
+        {authMessage && (
+          <div style={{ marginTop: '20px', fontSize: '18px', fontWeight: 'normal' }}>
+            {authMessage}
+          </div>
+        )}
+        {authError && (
+          <div style={{ marginTop: '20px', fontSize: '18px', fontWeight: 'normal', color: 'red' }}>
+            Error: {authError}
+          </div>
+        )}
       </div>
     </div>
   )
