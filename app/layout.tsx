@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
+import { TelegramProvider } from "@/contexts/TelegramProvider"
 
 export const metadata: Metadata = {
   title: "Telegram MiniApp",
@@ -20,7 +21,9 @@ export default function RootLayout({
           async
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <TelegramProvider>{children}</TelegramProvider>
+      </body>
     </html>
   )
 }
