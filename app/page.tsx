@@ -5,10 +5,14 @@ import { useTelegram } from "@/hooks/useTelegram"
 import { useTelegramAuth } from "@/hooks/useTelegramAuth"
 import { useTelegramMainButton } from "@/hooks/useTelegramMainButton"
 import { getTelegramWebApp } from "@/lib/telegram"
+import { useTelegramUserActivity } from "@/hooks/useTelegramUserActivity"
 
 export default function Home() {
   const { user, isInTelegram, isReady } = useTelegram()
   const { authMessage, authError } = useTelegramAuth()
+
+  const isAuthSuccess = isInTelegram && isReady && !!authMessage && !authError
+  const { registrationDate, lastLoginDate } = useTelegramUserActivity(isAuthSuccess)
 
   useTelegramMainButton({
     text: "Click me!",
@@ -29,7 +33,9 @@ export default function Home() {
           priority
           sizes="100vw"
         />
-        <div className="greeting">Loading...</div>
+        <div className="greeting">
+          <p>Loading...</p>
+        </div>
       </div>
     )
   }
@@ -45,7 +51,9 @@ export default function Home() {
           priority
           sizes="100vw"
         />
-        <div className="greeting">Hello, Anonymous, go to telegram plz</div>
+        <div className="greeting">
+          <p>Hello, Anonymous, go to telegram plz</p>
+        </div>
       </div>
     )
   }
@@ -63,28 +71,21 @@ export default function Home() {
         sizes="100vw"
       />
       <div className="greeting">
-        Hello, {nickname}, you use telegram miniapp. v1.2
+        <h1>Hello, {nickname}, you use telegram miniapp. v1.2</h1>
         {authMessage && (
-          <div
-            style={{
-              marginTop: "20px",
-              fontSize: "18px",
-              fontWeight: "normal",
-            }}
-          >
+          <p className="greeting__auth-message">
             {authMessage}
-          </div>
+          </p>
         )}
         {authError && (
-          <div
-            style={{
-              marginTop: "20px",
-              fontSize: "18px",
-              fontWeight: "normal",
-              color: "red",
-            }}
-          >
+          <p className="greeting__auth-error">
             Error: {authError}
+          </p>
+        )}
+        {registrationDate && lastLoginDate && (
+          <div className="greeting__activity">
+            <p>Registered at: {registrationDate.toLocaleString()}</p>
+            <p>Last login: {lastLoginDate.toLocaleString()}</p>
           </div>
         )}
       </div>
