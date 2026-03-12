@@ -43,3 +43,22 @@ body {
   font-weight: 600;
   text-align: center;
 }
+
+.greeting__auth-message {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.greeting__auth-error {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: normal;
+  color: red;
+}
+
+.greeting__activity {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: normal;
+}
