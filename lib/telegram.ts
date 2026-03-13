@@ -69,3 +69,46 @@ export function initTelegramWebApp(): void {
     webApp.expand()
   }
 }
+
+type CloudStorage = TelegramWebApp["CloudStorage"]
+
+/**
+ * Get multiple keys from Telegram CloudStorage (Promise wrapper)
+ */
+export function getCloudStorageItems(
+  storage: CloudStorage,
+  keys: string[],
+): Promise<Record<string, string | null>> {
+  return new Promise((resolve, reject) => {
+    storage.getItems(keys, (err, values) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      const result: Record<string, string | null> = {}
+      keys.forEach((key) => {
+        result[key] = values[key] ?? null
+      })
+      resolve(result)
+    })
+  })
+}
+
+/**
+ * Set one key in Telegram CloudStorage (Promise wrapper)
+ */
+export function setCloudStorageItem(
+  storage: CloudStorage,
+  key: string,
+  value: string,
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    storage.setItem(key, value, (err) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      resolve()
+    })
+  })
+}

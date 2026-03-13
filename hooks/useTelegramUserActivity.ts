@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useTelegram } from "@/hooks/useTelegram";
-import { getTelegramWebApp } from "@/lib/telegram";
+import {
+  getTelegramWebApp,
+  getCloudStorageItems,
+  setCloudStorageItem,
+} from "@/lib/telegram";
 
 type UseTelegramUserActivityResult = {
   registrationDate: Date | null;
@@ -39,55 +43,26 @@ export function useTelegramUserActivity(
       const storage = webApp.CloudStorage;
       const nowIso = new Date().toISOString();
 
-      const getItems = (keys: string[]) =>
-        new Promise<Record<string, string | null>>((resolve, reject) => {
-          storage.getItems(keys, (err, values) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-            const result: Record<string, string | null> = {};
-            keys.forEach((key) => {
-              result[key] = values[key] ?? null;
-            });
-            resolve(result);
-          });
-        });
-
-      const setItem = (key: string, value: string) =>
-        new Promise<void>((resolve, reject) => {
-          storage.setItem(key, value, (err) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-            resolve();
-          });
-        });
-
       try {
-        const { registered_at, last_login_at } = await getItems([
-          "registered_at",
-          "last_login_at",
-        ]);
+        const { registered_at, last_login_at } = await getCloudStorageItems(
+          storage,
+          ["registered_at", "last_login_at"],
+        );
 
         let reg = registered_at;
         let last = last_login_at;
         let displayLast: string | null = last;
 
         if (!reg) {
-          // Первый визит: регистрируем и показываем текущий момент
           reg = nowIso;
           last = nowIso;
           displayLast = nowIso;
-          await setItem("registered_at", reg);
-          await setItem("last_login_at", last);
+          await setCloudStorageItem(storage, "registered_at", reg);
+          await setCloudStorageItem(storage, "last_login_at", last);
         } else {
-          // Повторный визит: показываем прошлый last_login_at,
-          // а в хранилище обновляем last_login_at на "сейчас"
           displayLast = last;
           const newLast = nowIso;
-          await setItem("last_login_at", newLast);
+          await setCloudStorageItem(storage, "last_login_at", newLast);
           last = newLast;
         }
 
