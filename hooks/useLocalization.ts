@@ -2,19 +2,35 @@
 
 import { useMemo } from "react";
 import { useTelegram } from "./useTelegram";
-import { languages, type SupportedLanguage } from "@/localization";
+import { en } from "@/localization/en";
+import { ru } from "@/localization/ru";
+import type { SupportedLanguage } from "@/localization";
+
+type GreetingMessages = {
+  loading: string;
+  notInTelegram: string;
+  title: (name: string) => string;
+  registeredAt: (date: string) => string;
+  lastLogin: (date: string) => string;
+};
+
+type LocalizationMessages = {
+  greeting: GreetingMessages;
+};
 
 type UseLocalizationResult = {
   language: SupportedLanguage;
-  t: typeof languages.en;
+  t: LocalizationMessages;
 };
 
 function normalizeLanguage(lang?: string): SupportedLanguage {
   if (!lang) return "en";
   const short = lang.slice(0, 2).toLowerCase();
-  if (short in languages) {
+
+  if (short === "en" || short === "ru") {
     return short as SupportedLanguage;
   }
+
   return "en";
 }
 
@@ -26,7 +42,7 @@ export function useLocalization(): UseLocalizationResult {
     [rawLanguage],
   );
 
-  const t = languages[language];
+  const messages: LocalizationMessages = language === "ru" ? ru : en;
 
-  return { language, t };
+  return { language, t: messages };
 }
