@@ -1,11 +1,11 @@
-import type { TelegramWebApp, TelegramUser } from '@/types/telegram'
+import type { TelegramWebApp, TelegramUser } from "@/types/telegram"
 
 /**
  * Get Telegram WebApp instance
  * Returns null if not running in Telegram
  */
 export function getTelegramWebApp(): TelegramWebApp | null {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return null
   }
 
@@ -34,6 +34,15 @@ export function getTelegramUser(): TelegramUser | null {
   }
 
   return webApp.initDataUnsafe.user || null
+}
+
+export function getTelegramLanguage(): string | null {
+  const webApp = getTelegramWebApp()
+  if (!webApp) {
+    return null
+  }
+
+  return webApp.initDataUnsafe.user?.language_code || null
 }
 
 /**

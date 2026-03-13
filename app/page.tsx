@@ -6,13 +6,16 @@ import { useTelegramAuth } from "@/hooks/useTelegramAuth"
 import { useTelegramMainButton } from "@/hooks/useTelegramMainButton"
 import { getTelegramWebApp } from "@/lib/telegram"
 import { useTelegramUserActivity } from "@/hooks/useTelegramUserActivity"
+import { useLocalization } from "@/hooks/useLocalization"
 
 export default function Home() {
   const { user, isInTelegram, isReady } = useTelegram()
   const { authMessage, authError } = useTelegramAuth()
+  const { t } = useLocalization()
 
   const isAuthSuccess = isInTelegram && isReady && !!authMessage && !authError
-  const { registrationDate, lastLoginDate } = useTelegramUserActivity(isAuthSuccess)
+  const { registrationDate, lastLoginDate } =
+    useTelegramUserActivity(isAuthSuccess)
 
   useTelegramMainButton({
     text: "Click me!",
@@ -34,7 +37,7 @@ export default function Home() {
           sizes="100vw"
         />
         <div className="greeting">
-          <p>Loading...</p>
+          <p>{t.greeting.loading}</p>
         </div>
       </div>
     )
@@ -52,13 +55,18 @@ export default function Home() {
           sizes="100vw"
         />
         <div className="greeting">
-          <p>Hello, Anonymous, go to telegram plz</p>
+          <p>{t.greeting.notInTelegram}</p>
         </div>
       </div>
     )
   }
 
   const nickname = user?.username || user?.first_name || "User"
+
+  const registrationText =
+    registrationDate && t.greeting.registeredAt(registrationDate.toLocaleString())
+  const lastLoginText =
+    lastLoginDate && t.greeting.lastLogin(lastLoginDate.toLocaleString())
 
   return (
     <div className="container">
@@ -71,21 +79,17 @@ export default function Home() {
         sizes="100vw"
       />
       <div className="greeting">
-        <h1>Hello, {nickname}, you use telegram miniapp. v1.2</h1>
+        <h1>{t.greeting.title(nickname)}</h1>
         {authMessage && (
-          <p className="greeting__auth-message">
-            {authMessage}
-          </p>
+          <p className="greeting__auth-message">{authMessage}</p>
         )}
         {authError && (
-          <p className="greeting__auth-error">
-            Error: {authError}
-          </p>
+          <p className="greeting__auth-error">Error: {authError}</p>
         )}
-        {registrationDate && lastLoginDate && (
+        {registrationText && lastLoginText && (
           <div className="greeting__activity">
-            <p>Registered at: {registrationDate.toLocaleString()}</p>
-            <p>Last login: {lastLoginDate.toLocaleString()}</p>
+            <p>{registrationText}</p>
+            <p>{lastLoginText}</p>
           </div>
         )}
       </div>
