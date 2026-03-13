@@ -1,11 +1,18 @@
 "use client";
 
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import { getTelegramWebApp, isTelegramWebApp, getTelegramUser, initTelegramWebApp } from "@/lib/telegram";
+import {
+  getTelegramWebApp,
+  isTelegramWebApp,
+  getTelegramUser,
+  initTelegramWebApp,
+  getTelegramLanguage,
+} from "@/lib/telegram";
 import type { TelegramUser } from "@/types/telegram";
 
 type TelegramContextValue = {
   user: TelegramUser | null;
+  language: string;
   isInTelegram: boolean;
   isReady: boolean;
 };
@@ -18,10 +25,9 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<TelegramUser | null>(null);
   const [isInTelegram, setIsInTelegram] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [language, setLanguage] = useState<string>("en");
 
   useEffect(() => {
-    let clickHandler: (() => void) | null = null;
-
     const checkTelegram = () => {
       const inTelegram = isTelegramWebApp();
       setIsInTelegram(inTelegram);
@@ -30,6 +36,8 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
         initTelegramWebApp();
         const telegramUser = getTelegramUser();
         setUser(telegramUser);
+        const telegramLanguage = getTelegramLanguage();
+        setLanguage(telegramLanguage || "en");
       }
 
       setIsReady(true);
@@ -55,17 +63,11 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
         clearInterval(checkInterval);
       };
     }
-
-    return () => {
-      const webApp = getTelegramWebApp();
-      if (webApp && clickHandler) {
-        webApp.MainButton.offClick(clickHandler);
-      }
-    };
   }, []);
 
   const value: TelegramContextValue = {
     user,
+    language,
     isInTelegram,
     isReady,
   };
