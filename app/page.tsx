@@ -3,7 +3,7 @@
 import { useTelegram } from "@/hooks/useTelegram"
 import { useTelegramAuth } from "@/hooks/useTelegramAuth"
 import { useTelegramMainButton } from "@/hooks/useTelegramMainButton"
-import { getTelegramWebApp } from "@/lib/telegram"
+import { getTelegramWebApp, hapticNotification } from "@/lib/telegram"
 import { useTelegramUserActivity } from "@/hooks/useTelegramUserActivity"
 import { useLocalization } from "@/hooks/useLocalization"
 
@@ -19,6 +19,7 @@ export default function Home() {
   useTelegramMainButton({
     text: t.common.mainButtonText,
     onClick: () => {
+      hapticNotification("success")
       const webApp = getTelegramWebApp()
       webApp?.showAlert(t.common.mainButtonAlert)
     },

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTelegram } from "@/hooks/useTelegram";
 import { useLocalization } from "@/hooks/useLocalization";
-import { getTelegramInitData } from "@/lib/telegram";
+import { getTelegramInitData, hapticNotification } from "@/lib/telegram";
 import { authService } from "@/services/auth-service";
 
 type UseTelegramAuthResult = {
@@ -32,11 +32,13 @@ export function useTelegramAuth(): UseTelegramAuthResult {
       const response = await authService.authenticate(initData);
       setAuthMessage(response.message);
       setAuthError(null);
+      hapticNotification("success");
     } catch (error: unknown) {
       const message =
         error instanceof Error ? error.message : t.common.authFailed;
       setAuthError(message);
       setAuthMessage(null);
+      hapticNotification("error");
     } finally {
       setIsAuthLoading(false);
     }
