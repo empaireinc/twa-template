@@ -4,6 +4,8 @@ export const en = {
     mainButtonAlert: "Button clicked!",
     errorPrefix: "Error: ",
     authFailed: "Authentication failed",
+    errorBoundaryTitle: "Something went wrong",
+    errorBoundaryRetry: "Try again",
   },
   greeting: {
     loading: "Loading...",

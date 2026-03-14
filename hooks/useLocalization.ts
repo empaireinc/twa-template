@@ -11,6 +11,8 @@ type CommonMessages = {
   mainButtonAlert: string;
   errorPrefix: string;
   authFailed: string;
+  errorBoundaryTitle: string;
+  errorBoundaryRetry: string;
 };
 
 type GreetingMessages = {

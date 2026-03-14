@@ -4,6 +4,8 @@ export const ru = {
     mainButtonAlert: "Кнопка нажата!",
     errorPrefix: "Ошибка: ",
     authFailed: "Ошибка авторизации",
+    errorBoundaryTitle: "Что-то пошло не так",
+    errorBoundaryRetry: "Попробовать снова",
   },
   greeting: {
     loading: "Загрузка...",
