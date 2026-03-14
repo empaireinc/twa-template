@@ -72,9 +72,7 @@ export function initTelegramWebApp(): void {
 
 type CloudStorage = TelegramWebApp["CloudStorage"]
 
-/**
- * Get multiple keys from Telegram CloudStorage (Promise wrapper)
- */
+
 export function getCloudStorageItems(
   storage: CloudStorage,
   keys: string[],
@@ -94,9 +92,7 @@ export function getCloudStorageItems(
   })
 }
 
-/**
- * Set one key in Telegram CloudStorage (Promise wrapper)
- */
+
 export function setCloudStorageItem(
   storage: CloudStorage,
   key: string,

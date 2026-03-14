@@ -7,6 +7,11 @@ export interface AuthResponse {
   message: string
 }
 
+const getAuthUrl = (): string => {
+  const base = process.env.NEXT_PUBLIC_BACKEND_DOMAIN ?? ""
+  return `${base}/auth/tg`
+}
+
 export const authService = {
   /**
    * Authenticate using Telegram initData
@@ -14,7 +19,7 @@ export const authService = {
    * @returns Promise with auth response containing message
    */
   authenticate: async (initData: string): Promise<AuthResponse> => {
-    const response = await fetch('https://auth-learn.ru.tuna.am/auth/tg', {
+    const response = await fetch(getAuthUrl(), {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${initData}`,
