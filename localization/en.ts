@@ -1,4 +1,10 @@
 export const en = {
+  common: {
+    mainButtonText: "Click me!",
+    mainButtonAlert: "Button clicked!",
+    errorPrefix: "Error: ",
+    authFailed: "Authentication failed",
+  },
   greeting: {
     loading: "Loading...",
     notInTelegram: "Hello, Anonymous, go to telegram plz",

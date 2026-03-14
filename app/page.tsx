@@ -17,10 +17,10 @@ export default function Home() {
     useTelegramUserActivity(isAuthSuccess)
 
   useTelegramMainButton({
-    text: "Click me!",
+    text: t.common.mainButtonText,
     onClick: () => {
       const webApp = getTelegramWebApp()
-      webApp?.showAlert("Button clicked!")
+      webApp?.showAlert(t.common.mainButtonAlert)
     },
   })
 
@@ -59,7 +59,10 @@ export default function Home() {
           <p className="greeting__auth-message">{authMessage}</p>
         )}
         {authError && (
-          <p className="greeting__auth-error">Error: {authError}</p>
+          <p className="greeting__auth-error">
+            {t.common.errorPrefix}
+            {authError}
+          </p>
         )}
         {registrationText && lastLoginText && (
           <div className="greeting__activity">

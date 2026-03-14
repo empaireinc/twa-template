@@ -6,6 +6,13 @@ import { en } from "@/localization/en";
 import { ru } from "@/localization/ru";
 import type { SupportedLanguage } from "@/localization";
 
+type CommonMessages = {
+  mainButtonText: string;
+  mainButtonAlert: string;
+  errorPrefix: string;
+  authFailed: string;
+};
+
 type GreetingMessages = {
   loading: string;
   notInTelegram: string;
@@ -15,6 +22,7 @@ type GreetingMessages = {
 };
 
 type LocalizationMessages = {
+  common: CommonMessages;
   greeting: GreetingMessages;
 };
 
