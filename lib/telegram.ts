@@ -72,6 +72,11 @@ export function initTelegramWebApp(): void {
 
 type CloudStorage = TelegramWebApp["CloudStorage"]
 
+/** Ключи CloudStorage для даты регистрации и последнего входа */
+export const CLOUD_STORAGE_KEYS = {
+  REGISTERED_AT: "registered_at",
+  LAST_LOGIN_AT: "last_login_at",
+} as const
 
 export function getCloudStorageItems(
   storage: CloudStorage,

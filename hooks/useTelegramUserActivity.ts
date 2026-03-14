@@ -6,6 +6,7 @@ import {
   getTelegramWebApp,
   getCloudStorageItems,
   setCloudStorageItem,
+  CLOUD_STORAGE_KEYS,
 } from "@/lib/telegram";
 
 type UseTelegramUserActivityResult = {
@@ -43,26 +44,27 @@ export function useTelegramUserActivity(
       const storage = webApp.CloudStorage;
       const nowIso = new Date().toISOString();
 
-      try {
-        const { registered_at, last_login_at } = await getCloudStorageItems(
-          storage,
-          ["registered_at", "last_login_at"],
-        );
+      const keys = [
+        CLOUD_STORAGE_KEYS.REGISTERED_AT,
+        CLOUD_STORAGE_KEYS.LAST_LOGIN_AT,
+      ];
 
-        let reg = registered_at;
-        let last = last_login_at;
+      try {
+        const items = await getCloudStorageItems(storage, keys);
+        let reg = items[CLOUD_STORAGE_KEYS.REGISTERED_AT] ?? null;
+        let last = items[CLOUD_STORAGE_KEYS.LAST_LOGIN_AT] ?? null;
         let displayLast: string | null = last;
 
         if (!reg) {
           reg = nowIso;
           last = nowIso;
           displayLast = nowIso;
-          await setCloudStorageItem(storage, "registered_at", reg);
-          await setCloudStorageItem(storage, "last_login_at", last);
+          await setCloudStorageItem(storage, CLOUD_STORAGE_KEYS.REGISTERED_AT, reg);
+          await setCloudStorageItem(storage, CLOUD_STORAGE_KEYS.LAST_LOGIN_AT, last);
         } else {
           displayLast = last;
           const newLast = nowIso;
-          await setCloudStorageItem(storage, "last_login_at", newLast);
+          await setCloudStorageItem(storage, CLOUD_STORAGE_KEYS.LAST_LOGIN_AT, newLast);
           last = newLast;
         }
 
