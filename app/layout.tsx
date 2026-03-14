@@ -14,14 +14,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           src="https://telegram.org/js/telegram-web-app.js"
           async
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <TelegramProvider>{children}</TelegramProvider>
       </body>
     </html>

@@ -1,4 +1,12 @@
 export const ru = {
+  common: {
+    mainButtonText: "Нажми меня!",
+    mainButtonAlert: "Кнопка нажата!",
+    errorPrefix: "Ошибка: ",
+    authFailed: "Ошибка авторизации",
+    errorBoundaryTitle: "Что-то пошло не так",
+    errorBoundaryRetry: "Попробовать снова",
+  },
   greeting: {
     loading: "Загрузка...",
     notInTelegram: "Привет, Пользователь, зайди через Telegram",

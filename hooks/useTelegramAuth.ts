@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useTelegram } from "@/hooks/useTelegram";
-import { getTelegramInitData } from "@/lib/telegram";
+import { useLocalization } from "@/hooks/useLocalization";
+import { getTelegramInitData, hapticNotification } from "@/lib/telegram";
 import { authService } from "@/services/auth-service";
 
 type UseTelegramAuthResult = {
@@ -14,6 +15,7 @@ type UseTelegramAuthResult = {
 
 export function useTelegramAuth(): UseTelegramAuthResult {
   const { isInTelegram, isReady } = useTelegram();
+  const { t } = useLocalization();
   const [authMessage, setAuthMessage] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
@@ -30,15 +32,17 @@ export function useTelegramAuth(): UseTelegramAuthResult {
       const response = await authService.authenticate(initData);
       setAuthMessage(response.message);
       setAuthError(null);
+      hapticNotification("success");
     } catch (error: unknown) {
       const message =
-        error instanceof Error ? error.message : "Authentication failed";
+        error instanceof Error ? error.message : t.common.authFailed;
       setAuthError(message);
       setAuthMessage(null);
+      hapticNotification("error");
     } finally {
       setIsAuthLoading(false);
     }
-  }, [isInTelegram]);
+  }, [isInTelegram, t]);
 
   useEffect(() => {
     if (isInTelegram && isReady) {

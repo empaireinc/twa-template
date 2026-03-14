@@ -1,10 +1,9 @@
 "use client"
 
-import Image from "next/image"
 import { useTelegram } from "@/hooks/useTelegram"
 import { useTelegramAuth } from "@/hooks/useTelegramAuth"
 import { useTelegramMainButton } from "@/hooks/useTelegramMainButton"
-import { getTelegramWebApp } from "@/lib/telegram"
+import { getTelegramWebApp, hapticNotification } from "@/lib/telegram"
 import { useTelegramUserActivity } from "@/hooks/useTelegramUserActivity"
 import { useLocalization } from "@/hooks/useLocalization"
 
@@ -18,24 +17,17 @@ export default function Home() {
     useTelegramUserActivity(isAuthSuccess)
 
   useTelegramMainButton({
-    text: "Click me!",
+    text: t.common.mainButtonText,
     onClick: () => {
+      hapticNotification("success")
       const webApp = getTelegramWebApp()
-      webApp?.showAlert("Button clicked!")
+      webApp?.showAlert(t.common.mainButtonAlert)
     },
   })
 
   if (!isReady) {
     return (
       <div className="container">
-        <Image
-          src="/greeting.png"
-          alt=""
-          fill
-          className="container__bg"
-          priority
-          sizes="100vw"
-        />
         <div className="greeting">
           <p>{t.greeting.loading}</p>
         </div>
@@ -46,14 +38,6 @@ export default function Home() {
   if (!isInTelegram) {
     return (
       <div className="container">
-        <Image
-          src="/greeting.png"
-          alt=""
-          fill
-          className="container__bg"
-          priority
-          sizes="100vw"
-        />
         <div className="greeting">
           <p>{t.greeting.notInTelegram}</p>
         </div>
@@ -70,21 +54,16 @@ export default function Home() {
 
   return (
     <div className="container">
-      <Image
-        src="/greeting.png"
-        alt=""
-        fill
-        className="container__bg"
-        priority
-        sizes="100vw"
-      />
       <div className="greeting">
         <h1>{t.greeting.title(nickname)}</h1>
         {authMessage && (
           <p className="greeting__auth-message">{authMessage}</p>
         )}
         {authError && (
-          <p className="greeting__auth-error">Error: {authError}</p>
+          <p className="greeting__auth-error">
+            {t.common.errorPrefix}
+            {authError}
+          </p>
         )}
         {registrationText && lastLoginText && (
           <div className="greeting__activity">
