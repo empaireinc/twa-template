@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTelegram } from "@/hooks/useTelegram";
+import { useTelegramContext } from "@/hooks/useTelegramContext";
 import {
   getTelegramWebApp,
   getCloudStorageItems,
@@ -19,7 +19,7 @@ type UseTelegramUserActivityResult = {
 export function useTelegramUserActivity(
   enabled: boolean,
 ): UseTelegramUserActivityResult {
-  const { isInTelegram } = useTelegram();
+  const { isInTelegram } = useTelegramContext();
   const [registrationDate, setRegistrationDate] = useState<Date | null>(null);
   const [lastLoginDate, setLastLoginDate] = useState<Date | null>(null);
   const [isLoading, setIsLoading] = useState(false);

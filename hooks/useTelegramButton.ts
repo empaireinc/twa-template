@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useTelegram } from "@/hooks/useTelegram";
+import { useTelegramContext } from "@/hooks/useTelegramContext";
 import { getTelegramWebApp } from "@/lib/telegram";
 
 type MainButtonOptions = {
@@ -22,7 +22,7 @@ type BackButtonOptions = {
 export type UseTelegramButtonOptions = MainButtonOptions | BackButtonOptions;
 
 export function useTelegramButton(options: UseTelegramButtonOptions) {
-  const { isInTelegram, isReady } = useTelegram();
+  const { isInTelegram, isReady } = useTelegramContext();
 
   useEffect(() => {
     if (!isInTelegram || !isReady) {

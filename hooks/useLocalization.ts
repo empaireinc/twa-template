@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useTelegram } from "./useTelegram";
+import { useTelegramContext } from "./useTelegramContext";
 import { en } from "@/localization/en";
 import { ru } from "@/localization/ru";
 import type { SupportedLanguage } from "@/localization";
@@ -52,7 +52,7 @@ function normalizeLanguage(lang?: string): SupportedLanguage {
 }
 
 export function useLocalization(): UseLocalizationResult {
-  const { language: rawLanguage } = useTelegram();
+  const { language: rawLanguage } = useTelegramContext();
 
   const language = useMemo(
     () => normalizeLanguage(rawLanguage),
