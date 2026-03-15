@@ -40,13 +40,14 @@ export function useTelegramButton(options: UseTelegramButtonOptions) {
 
     if (options.type === "main") {
       const isVisible = options.isVisible ?? true;
+      const theme = webApp.themeParams;
+      const defaultColor = theme?.button_color ?? "#2481cc";
+      const defaultTextColor = theme?.button_text_color ?? "#ffffff";
 
-      if (options.color || options.textColor) {
-        webApp.MainButton.setParams({
-          ...(options.color ? { color: options.color } : {}),
-          ...(options.textColor ? { text_color: options.textColor } : {}),
-        });
-      }
+      webApp.MainButton.setParams({
+        color: options.color ?? defaultColor,
+        text_color: options.textColor ?? defaultTextColor,
+      });
 
       webApp.MainButton.setText(options.text);
       if (isVisible) {
@@ -57,6 +58,10 @@ export function useTelegramButton(options: UseTelegramButtonOptions) {
       webApp.MainButton.onClick(handler);
       return () => {
         webApp.MainButton.offClick(handler);
+        webApp.MainButton.setParams({
+          color: defaultColor,
+          text_color: defaultTextColor,
+        });
         webApp.MainButton.hide();
       };
     }
