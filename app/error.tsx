@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useLocalization } from "@/hooks/useLocalization"
-import { useTelegramMainButton } from "@/hooks/useTelegramMainButton"
+import { useTelegramButton } from "@/hooks/useTelegramButton"
 
 export default function Error({
   error,
@@ -13,7 +13,8 @@ export default function Error({
 }) {
   const { t } = useLocalization()
 
-  useTelegramMainButton({
+  useTelegramButton({
+    type: "main",
     text: t.common.errorBoundaryRetry,
     onClick: reset,
   })

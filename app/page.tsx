@@ -2,7 +2,7 @@
 
 import { useTelegram } from "@/hooks/useTelegram"
 import { useTelegramAuth } from "@/hooks/useTelegramAuth"
-import { useTelegramMainButton } from "@/hooks/useTelegramMainButton"
+import { useTelegramButton } from "@/hooks/useTelegramButton"
 import { getTelegramWebApp, hapticNotification } from "@/lib/telegram"
 import { useTelegramUserActivity } from "@/hooks/useTelegramUserActivity"
 import { useLocalization } from "@/hooks/useLocalization"
@@ -16,7 +16,8 @@ export default function Home() {
   const { registrationDate, lastLoginDate } =
     useTelegramUserActivity(isAuthSuccess)
 
-  useTelegramMainButton({
+  useTelegramButton({
+    type: "main",
     text: t.common.mainButtonText,
     onClick: () => {
       hapticNotification("success")
