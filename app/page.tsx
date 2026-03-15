@@ -7,8 +7,10 @@ import { getTelegramWebApp, hapticNotification } from "@/lib/telegram"
 import { useTelegramUserActivity } from "@/hooks/useTelegramUserActivity"
 import { useLocalization } from "@/hooks/useLocalization"
 import { CustomButton } from "@/components/UI/CustomButton"
+import { useRouter } from "next/navigation"
 
 export default function Home() {
+  const router = useRouter()
   const { user, isInTelegram, isReady } = useTelegram()
   const { authMessage, authError } = useTelegramAuth()
   const { t } = useLocalization()
@@ -30,7 +32,7 @@ export default function Home() {
   if (!isReady) {
     return (
       <div className="container">
-        <div className="greeting">
+        <div className="page-title">
           <p>{t.greeting.loading}</p>
         </div>
       </div>
@@ -40,7 +42,7 @@ export default function Home() {
   if (!isInTelegram) {
     return (
       <div className="container">
-        <div className="greeting">
+        <div className="page-title">
           <p>{t.greeting.notInTelegram}</p>
         </div>
       </div>
@@ -56,7 +58,7 @@ export default function Home() {
 
   return (
     <div className="container">
-      <div className="greeting">
+      <div className="page-title">
         <h1>{t.greeting.title(nickname)}</h1>
         {authMessage && (
           <p className="greeting__auth-message">{authMessage}</p>
@@ -74,7 +76,10 @@ export default function Home() {
           </div>
         )}
       </div>
-      <CustomButton text={t.common.secondPageButtonText} />
+      <CustomButton
+        text={t.common.secondPageButtonText}
+        onClick={() => router.push("/page1")}
+      />
     </div>
   )
 }

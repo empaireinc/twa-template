@@ -9,6 +9,8 @@ type MainButtonOptions = {
   text: string;
   onClick: () => void;
   isVisible?: boolean;
+  color?: string;
+  textColor?: string;
 };
 
 type BackButtonOptions = {
@@ -38,6 +40,14 @@ export function useTelegramButton(options: UseTelegramButtonOptions) {
 
     if (options.type === "main") {
       const isVisible = options.isVisible ?? true;
+
+      if (options.color || options.textColor) {
+        webApp.MainButton.setParams({
+          ...(options.color ? { color: options.color } : {}),
+          ...(options.textColor ? { text_color: options.textColor } : {}),
+        });
+      }
+
       webApp.MainButton.setText(options.text);
       if (isVisible) {
         webApp.MainButton.show();
@@ -51,24 +61,27 @@ export function useTelegramButton(options: UseTelegramButtonOptions) {
       };
     }
 
-    // type === "back"
-    const isVisible = options.isVisible ?? true;
-    if (isVisible) {
-      webApp.BackButton.show();
-    } else {
-      webApp.BackButton.hide();
+    if (options.type === "back") {
+      const isVisible = options.isVisible ?? true;
+      if (isVisible) {
+        webApp.BackButton.show();
+      } else {
+        webApp.BackButton.hide();
+      }
+      webApp.BackButton.onClick(handler);
+      return () => {
+        webApp.BackButton.offClick(handler);
+        webApp.BackButton.hide();
+      };
     }
-    webApp.BackButton.onClick(handler);
-    return () => {
-      webApp.BackButton.offClick(handler);
-      webApp.BackButton.hide();
-    };
   }, [
     isInTelegram,
     isReady,
     options.type,
     options.onClick,
     options.isVisible,
-    ...(options.type === "main" ? [options.text] : []),
+    ...(options.type === "main"
+      ? [options.text, options.color, options.textColor]
+      : []),
   ]);
 }

@@ -15,5 +15,9 @@ export const en = {
     registeredAt: (date: string) => `Registered at: ${date}`,
     lastLogin: (date: string) => `Last login: ${date}`,
   },
+  page1: {
+    title: "Test page",
+    mainButtonText: "Raise Error Example",
+  },
 };
 

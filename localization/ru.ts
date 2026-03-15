@@ -16,4 +16,8 @@ export const ru = {
     registeredAt: (date: string) => `Дата регистрации: ${date}`,
     lastLogin: (date: string) => `Последний визит: ${date}`,
   },
+  page1: {
+    title: "Тестовая страница",
+    mainButtonText: "Raise Error Example",
+  },
 };

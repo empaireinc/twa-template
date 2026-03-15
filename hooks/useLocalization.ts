@@ -24,9 +24,15 @@ type GreetingMessages = {
   lastLogin: (date: string) => string;
 };
 
+type Page1Messages = {
+  title: string;
+  mainButtonText: string;
+};
+
 type LocalizationMessages = {
   common: CommonMessages;
   greeting: GreetingMessages;
+  page1: Page1Messages;
 };
 
 type UseLocalizationResult = {
