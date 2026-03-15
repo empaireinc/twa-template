@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { useLocalization } from "@/hooks/useLocalization"
 import { useTelegramButton } from "@/hooks/useTelegramButton"
 
@@ -11,12 +12,18 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const router = useRouter()
   const { t } = useLocalization()
 
   useTelegramButton({
     type: "main",
     text: t.common.errorBoundaryRetry,
     onClick: reset,
+  })
+
+  useTelegramButton({
+    type: "back",
+    onClick: () => router.back(),
   })
 
   useEffect(() => {
