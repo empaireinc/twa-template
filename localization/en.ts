@@ -6,6 +6,7 @@ export const en = {
     authFailed: "Authentication failed",
     errorBoundaryTitle: "Something went wrong",
     errorBoundaryRetry: "Try again",
+    secondPageButtonText: "Second page",
   },
   greeting: {
     loading: "Loading...",

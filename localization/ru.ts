@@ -6,6 +6,7 @@ export const ru = {
     authFailed: "Ошибка авторизации",
     errorBoundaryTitle: "Что-то пошло не так",
     errorBoundaryRetry: "Попробовать снова",
+    secondPageButtonText: "Вторая страница",
   },
   greeting: {
     loading: "Загрузка...",

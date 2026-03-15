@@ -13,6 +13,7 @@ type CommonMessages = {
   authFailed: string;
   errorBoundaryTitle: string;
   errorBoundaryRetry: string;
+  secondPageButtonText: string;
 };
 
 type GreetingMessages = {

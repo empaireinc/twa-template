@@ -6,6 +6,7 @@ import { useTelegramButton } from "@/hooks/useTelegramButton"
 import { getTelegramWebApp, hapticNotification } from "@/lib/telegram"
 import { useTelegramUserActivity } from "@/hooks/useTelegramUserActivity"
 import { useLocalization } from "@/hooks/useLocalization"
+import { CustomButton } from "@/components/UI/CustomButton"
 
 export default function Home() {
   const { user, isInTelegram, isReady } = useTelegram()
@@ -73,6 +74,7 @@ export default function Home() {
           </div>
         )}
       </div>
+      <CustomButton text={t.common.secondPageButtonText} />
     </div>
   )
 }
