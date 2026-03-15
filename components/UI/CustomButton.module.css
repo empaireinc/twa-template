@@ -1,0 +1,30 @@
+.customButtonWrapper {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 0; /* прямо над нативной MainButton */
+  z-index: 10;
+}
+
+.customButton {
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+
+  background-color: var(--tg-theme-button-color, #2481cc);
+  color: var(--tg-theme-button-text-color, #ffffff);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+}
+
+.customButton:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  opacity: 0.9;
+}
+

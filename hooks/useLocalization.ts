@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useTelegram } from "./useTelegram";
+import { useTelegramContext } from "./useTelegramContext";
 import { en } from "@/localization/en";
 import { ru } from "@/localization/ru";
 import type { SupportedLanguage } from "@/localization";
@@ -13,6 +13,7 @@ type CommonMessages = {
   authFailed: string;
   errorBoundaryTitle: string;
   errorBoundaryRetry: string;
+  secondPageButtonText: string;
 };
 
 type GreetingMessages = {
@@ -23,9 +24,15 @@ type GreetingMessages = {
   lastLogin: (date: string) => string;
 };
 
+type Page1Messages = {
+  title: string;
+  mainButtonText: string;
+};
+
 type LocalizationMessages = {
   common: CommonMessages;
   greeting: GreetingMessages;
+  page1: Page1Messages;
 };
 
 type UseLocalizationResult = {
@@ -45,7 +52,7 @@ function normalizeLanguage(lang?: string): SupportedLanguage {
 }
 
 export function useLocalization(): UseLocalizationResult {
-  const { language: rawLanguage } = useTelegram();
+  const { language: rawLanguage } = useTelegramContext();
 
   const language = useMemo(
     () => normalizeLanguage(rawLanguage),

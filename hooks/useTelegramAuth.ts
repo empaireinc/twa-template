@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useTelegram } from "@/hooks/useTelegram";
+import { useTelegramContext } from "@/hooks/useTelegramContext";
 import { useLocalization } from "@/hooks/useLocalization";
 import { getTelegramInitData, hapticNotification } from "@/lib/telegram";
 import { authService } from "@/services/auth-service";
@@ -14,7 +14,7 @@ type UseTelegramAuthResult = {
 };
 
 export function useTelegramAuth(): UseTelegramAuthResult {
-  const { isInTelegram, isReady } = useTelegram();
+  const { isInTelegram, isReady } = useTelegramContext();
   const { t } = useLocalization();
   const [authMessage, setAuthMessage] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);

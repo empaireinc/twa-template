@@ -1,22 +1,22 @@
 "use client"
 
-import { useTelegram } from "@/hooks/useTelegram"
-import { useTelegramAuth } from "@/hooks/useTelegramAuth"
-import { useTelegramMainButton } from "@/hooks/useTelegramMainButton"
+import { useTelegramContext } from "@/hooks/useTelegramContext"
+import { useTelegramButton } from "@/hooks/useTelegramButton"
 import { getTelegramWebApp, hapticNotification } from "@/lib/telegram"
-import { useTelegramUserActivity } from "@/hooks/useTelegramUserActivity"
+import { useAuthDataContext } from "@/hooks/useAuthDataContext"
 import { useLocalization } from "@/hooks/useLocalization"
+import { CustomButton } from "@/components/UI/CustomButton"
+import { useRouter } from "next/navigation"
 
 export default function Home() {
-  const { user, isInTelegram, isReady } = useTelegram()
-  const { authMessage, authError } = useTelegramAuth()
+  const router = useRouter()
+  const { user, isInTelegram, isReady } = useTelegramContext()
+  const { authMessage, authError, registrationDate, lastLoginDate } =
+    useAuthDataContext()
   const { t } = useLocalization()
 
-  const isAuthSuccess = isInTelegram && isReady && !!authMessage && !authError
-  const { registrationDate, lastLoginDate } =
-    useTelegramUserActivity(isAuthSuccess)
-
-  useTelegramMainButton({
+  useTelegramButton({
+    type: "main",
     text: t.common.mainButtonText,
     onClick: () => {
       hapticNotification("success")
@@ -28,7 +28,7 @@ export default function Home() {
   if (!isReady) {
     return (
       <div className="container">
-        <div className="greeting">
+        <div className="page-title">
           <p>{t.greeting.loading}</p>
         </div>
       </div>
@@ -38,7 +38,7 @@ export default function Home() {
   if (!isInTelegram) {
     return (
       <div className="container">
-        <div className="greeting">
+        <div className="page-title">
           <p>{t.greeting.notInTelegram}</p>
         </div>
       </div>
@@ -54,7 +54,7 @@ export default function Home() {
 
   return (
     <div className="container">
-      <div className="greeting">
+      <div className="page-title">
         <h1>{t.greeting.title(nickname)}</h1>
         {authMessage && (
           <p className="greeting__auth-message">{authMessage}</p>
@@ -72,6 +72,10 @@ export default function Home() {
           </div>
         )}
       </div>
+      <CustomButton
+        text={t.common.secondPageButtonText}
+        onClick={() => router.push("/page1")}
+      />
     </div>
   )
 }

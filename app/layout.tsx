@@ -1,7 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
-import { TelegramProvider } from "@/contexts/TelegramProvider"
+import { TelegramContextProvider } from "@/contexts/TelegramContext"
+import { AuthDataContextProvider } from "@/contexts/AuthDataContext"
 
 export const metadata: Metadata = {
   title: "Telegram MiniApp",
@@ -22,7 +23,9 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
-        <TelegramProvider>{children}</TelegramProvider>
+        <TelegramContextProvider>
+          <AuthDataContextProvider>{children}</AuthDataContextProvider>
+        </TelegramContextProvider>
       </body>
     </html>
   )

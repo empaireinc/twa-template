@@ -6,6 +6,7 @@ export const ru = {
     authFailed: "Ошибка авторизации",
     errorBoundaryTitle: "Что-то пошло не так",
     errorBoundaryRetry: "Попробовать снова",
+    secondPageButtonText: "Вторая страница",
   },
   greeting: {
     loading: "Загрузка...",
@@ -14,5 +15,9 @@ export const ru = {
       `Привет, ${name}, ты используешь Telegram miniapp. v1.2`,
     registeredAt: (date: string) => `Дата регистрации: ${date}`,
     lastLogin: (date: string) => `Последний визит: ${date}`,
+  },
+  page1: {
+    title: "Тестовая страница",
+    mainButtonText: "Raise Error Example",
   },
 };

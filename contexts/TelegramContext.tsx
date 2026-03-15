@@ -10,7 +10,7 @@ import {
 } from "@/lib/telegram";
 import type { TelegramUser } from "@/types/telegram";
 
-type TelegramContextValue = {
+export type TelegramContextValue = {
   user: TelegramUser | null;
   language: string;
   isInTelegram: boolean;
@@ -21,7 +21,7 @@ export const TelegramContext = createContext<TelegramContextValue | undefined>(
   undefined,
 );
 
-export function TelegramProvider({ children }: { children: ReactNode }) {
+export function TelegramContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<TelegramUser | null>(null);
   const [isInTelegram, setIsInTelegram] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -78,4 +78,3 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
     </TelegramContext.Provider>
   );
 }
-
