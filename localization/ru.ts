@@ -3,7 +3,7 @@ export const ru = {
     mainButtonText: "Нажми меня!",
     mainButtonAlert: "Кнопка нажата!",
     errorPrefix: "Ошибка: ",
-    errorBoundaryTitle: "Что-то пошло не так",
+    errorBoundaryTitle: "Ошибка",
     errorBoundaryRetry: "Попробовать снова",
     secondPageButtonText: "Вторая страница",
   },

@@ -38,6 +38,14 @@ body {
   font-weight: 600;
 }
 
+.page-title__details {
+  margin-top: 16px;
+  min-height: 72px; /* зарезервированное место под сообщения/активность */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .greeting__auth-message {
   margin-top: 20px;
   font-size: 18px;

@@ -56,21 +56,23 @@ export default function Home() {
     <div className="container">
       <div className="page-title">
         <h1>{t.greeting.title(nickname)}</h1>
-        {authMessage && (
-          <p className="greeting__auth-message">{authMessage}</p>
-        )}
-        {authError && (
-          <p className="greeting__auth-error">
-            {t.common.errorPrefix}
-            {authError}
-          </p>
-        )}
-        {registrationText && lastLoginText && (
-          <div className="greeting__activity">
-            <p>{registrationText}</p>
-            <p>{lastLoginText}</p>
-          </div>
-        )}
+        <div className="page-title__details">
+          {authMessage && (
+            <p className="greeting__auth-message">{authMessage}</p>
+          )}
+          {authError && (
+            <p className="greeting__auth-error">
+              {t.common.errorPrefix}
+              {authError}
+            </p>
+          )}
+          {registrationText && lastLoginText && (
+            <div className="greeting__activity">
+              <p>{registrationText}</p>
+              <p>{lastLoginText}</p>
+            </div>
+          )}
+        </div>
       </div>
       <CustomButton
         text={t.common.secondPageButtonText}
