@@ -5,6 +5,7 @@ import {
   createWebSocketClient,
   type WebSocketClient,
 } from "@/services/websocket-service";
+import type { AppErrorCode } from "@/errors/messages";
 
 export type UseWebSocketOptions = {
   url: string;
@@ -12,7 +13,7 @@ export type UseWebSocketOptions = {
 
 export type UseWebSocketResult = {
   status: "idle" | "connecting" | "open" | "closed" | "error";
-  error: string | null;
+  errorCode: AppErrorCode | null;
   lastRate: number | null;
   send: (data: string) => void;
 };
@@ -26,18 +27,18 @@ export function useWebSocket({ url }: UseWebSocketOptions): UseWebSocketResult {
   const [status, setStatus] = useState<
     "idle" | "connecting" | "open" | "closed" | "error"
   >("idle");
-  const [error, setError] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<AppErrorCode | null>(null);
 
   useEffect(() => {
     if (!url) {
       setStatus("idle");
-      setError(null);
+      setErrorCode(null);
       return;
     }
 
     const connectWithHandlers = () => {
       setStatus("connecting");
-      setError(null);
+      setErrorCode(null);
 
       const client = createWebSocketClient(url);
       clientRef.current = client;
@@ -62,11 +63,11 @@ export function useWebSocket({ url }: UseWebSocketOptions): UseWebSocketResult {
         });
         socket.addEventListener("error", () => {
           setStatus("error");
-          setError("WebSocket connection error");
+          setErrorCode("WS_CONNECTION_ERROR");
         });
         socket.addEventListener("close", () => {
           setStatus("closed");
-          // простейший авто-reconnect через 3 секунды
+          
           if (reconnectTimeoutRef.current) {
             clearTimeout(reconnectTimeoutRef.current);
           }
@@ -91,6 +92,6 @@ export function useWebSocket({ url }: UseWebSocketOptions): UseWebSocketResult {
     clientRef.current?.send(data);
   };
 
-  return { status, error, lastRate, send };
+  return { status, errorCode, lastRate, send };
 }
 

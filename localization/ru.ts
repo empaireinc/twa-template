@@ -3,7 +3,6 @@ export const ru = {
     mainButtonText: "Нажми меня!",
     mainButtonAlert: "Кнопка нажата!",
     errorPrefix: "Ошибка: ",
-    authFailed: "Ошибка авторизации",
     errorBoundaryTitle: "Что-то пошло не так",
     errorBoundaryRetry: "Попробовать снова",
     secondPageButtonText: "Вторая страница",
@@ -22,6 +21,10 @@ export const ru = {
   },
   websocket: {
     connecting: "Подключение к серверу...",
-    error: "Ошибка подключения к серверу",
+  },
+  errors: {
+    authFailed: "Ошибка авторизации",
+    websocketConnection: "Ошибка подключения к серверу",
+    unknown: "Что-то пошло не так...",
   },
 };

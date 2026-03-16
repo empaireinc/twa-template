@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTelegramContext } from "@/hooks/useTelegramContext";
 import { useLocalization } from "@/hooks/useLocalization";
+import { getFriendlyErrorMessage } from "@/errors/messages";
 import { getTelegramInitData, hapticNotification } from "@/lib/telegram";
 import { authService } from "@/services/auth-service";
 
@@ -34,9 +35,8 @@ export function useTelegramAuth(): UseTelegramAuthResult {
       setAuthError(null);
       hapticNotification("success");
     } catch (error: unknown) {
-      const message =
-        error instanceof Error ? error.message : t.common.authFailed;
-      setAuthError(message);
+      const friendlyMessage = getFriendlyErrorMessage("AUTH_FAILED", t);
+      setAuthError(friendlyMessage);
       setAuthMessage(null);
       hapticNotification("error");
     } finally {
