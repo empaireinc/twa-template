@@ -19,5 +19,9 @@ export const en = {
     title: "Test page",
     mainButtonText: "Raise Error Example",
   },
+  websocket: {
+    connecting: "Connecting to server...",
+    error: "WebSocket connection error",
+  },
 };
 

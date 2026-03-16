@@ -20,4 +20,8 @@ export const ru = {
     title: "Тестовая страница",
     mainButtonText: "Raise Error Example",
   },
+  websocket: {
+    connecting: "Подключение к серверу...",
+    error: "Ошибка подключения к серверу",
+  },
 };

@@ -29,10 +29,16 @@ type Page1Messages = {
   mainButtonText: string;
 };
 
+type WebSocketMessages = {
+  connecting: string;
+  error: string;
+};
+
 type LocalizationMessages = {
   common: CommonMessages;
   greeting: GreetingMessages;
   page1: Page1Messages;
+  websocket: WebSocketMessages;
 };
 
 type UseLocalizationResult = {
