@@ -3,7 +3,6 @@ export const en = {
     mainButtonText: "Click me!",
     mainButtonAlert: "Button clicked!",
     errorPrefix: "Error: ",
-    authFailed: "Authentication failed",
     errorBoundaryTitle: "Something went wrong",
     errorBoundaryRetry: "Try again",
     secondPageButtonText: "Second page",
@@ -18,6 +17,14 @@ export const en = {
   page1: {
     title: "Test page",
     mainButtonText: "Raise Error Example",
+  },
+  websocket: {
+    connecting: "Connecting to server...",
+  },
+  errors: {
+    authFailed: "Authentication failed",
+    websocketConnection: "Failed to connect to server",
+    unknown: "An unknown error occurred",
   },
 };
 

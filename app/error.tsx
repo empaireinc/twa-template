@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useLocalization } from "@/hooks/useLocalization"
 import { useTelegramButton } from "@/hooks/useTelegramButton"
+import { getFriendlyErrorMessage } from "@/errors/messages"
 
 export default function Error({
   error,
@@ -14,6 +15,7 @@ export default function Error({
 }) {
   const router = useRouter()
   const { t } = useLocalization()
+  const friendly = getFriendlyErrorMessage("UNKNOWN", t)
 
   useTelegramButton({
     type: "main",
@@ -35,7 +37,7 @@ export default function Error({
       <h2 className="error-boundary__title">
         {t.common.errorBoundaryTitle}
       </h2>
-      <p className="error-boundary__message">{error.message}</p>
+      <p className="error-boundary__message">{friendly}</p>
     </div>
   )
 }

@@ -10,7 +10,6 @@ type CommonMessages = {
   mainButtonText: string;
   mainButtonAlert: string;
   errorPrefix: string;
-  authFailed: string;
   errorBoundaryTitle: string;
   errorBoundaryRetry: string;
   secondPageButtonText: string;
@@ -29,10 +28,22 @@ type Page1Messages = {
   mainButtonText: string;
 };
 
+type WebSocketMessages = {
+  connecting: string;
+};
+
+type ErrorMessages = {
+  authFailed: string;
+  websocketConnection: string;
+  unknown: string;
+};
+
 type LocalizationMessages = {
   common: CommonMessages;
   greeting: GreetingMessages;
   page1: Page1Messages;
+  websocket: WebSocketMessages;
+  errors: ErrorMessages;
 };
 
 type UseLocalizationResult = {
