@@ -56,22 +56,26 @@ export default function Home() {
     <div className="container">
       <div className="page-title">
         <h1>{t.greeting.title(nickname)}</h1>
-        <div className="page-title__details">
-          {authMessage && (
-            <p className="greeting__auth-message">{authMessage}</p>
-          )}
-          {authError && (
-            <p className="greeting__auth-error">
-              {t.common.errorPrefix}
-              {authError}
-            </p>
-          )}
-          {registrationText && lastLoginText && (
-            <div className="greeting__activity">
-              <p>{registrationText}</p>
-              <p>{lastLoginText}</p>
-            </div>
-          )}
+        <div className="page-title__details page-title__details--home">
+          <div className="page-title__row">
+            {authMessage && (
+              <p className="greeting__auth-message">{authMessage}</p>
+            )}
+            {authError && (
+              <p className="greeting__auth-error">
+                {t.common.errorPrefix}
+                {authError}
+              </p>
+            )}
+          </div>
+          <div className="page-title__row">
+            {registrationText && lastLoginText && (
+              <div className="greeting__activity">
+                <p>{registrationText}</p>
+                <p>{lastLoginText}</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <CustomButton

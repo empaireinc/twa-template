@@ -46,18 +46,21 @@ export default function Page1() {
     <div className="container">
       <div className="page-title">
         <h1>{t.page1.title}</h1>
-        <div className="page-title__details">
-          {wsText && (
-            <p
-              className={
-                status === "error"
-                  ? "greeting__auth-error"
-                  : "greeting__activity"
-              }
-            >
-              {wsText}
-            </p>
-          )}
+        <div className="page-title__details page-title__details--page1">
+          <div className="page-title__row">
+            {wsText && (
+              <p
+                className={
+                  status === "error"
+                    ? "greeting__auth-error"
+                    : "greeting__activity"
+                }
+              >
+                {wsText}
+              </p>
+            )}
+          </div>
+          <div className="page-title__row" />
         </div>
       </div>
     </div>
