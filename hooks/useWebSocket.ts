@@ -23,6 +23,7 @@ export function useWebSocket({ url }: UseWebSocketOptions): UseWebSocketResult {
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
+  const isActiveRef = useRef(false);
   const [lastRate, setLastRate] = useState<number | null>(null);
   const [status, setStatus] = useState<
     "idle" | "connecting" | "open" | "closed" | "error"
@@ -30,6 +31,8 @@ export function useWebSocket({ url }: UseWebSocketOptions): UseWebSocketResult {
   const [errorCode, setErrorCode] = useState<AppErrorCode | null>(null);
 
   useEffect(() => {
+    isActiveRef.current = true;
+
     if (!url) {
       setStatus("idle");
       setErrorCode(null);
@@ -59,21 +62,28 @@ export function useWebSocket({ url }: UseWebSocketOptions): UseWebSocketResult {
       const socket = client.getSocket();
       if (socket) {
         socket.addEventListener("open", () => {
+          if (!isActiveRef.current) return;
           setStatus("open");
+          console.log("WebSocket connection opened");
         });
         socket.addEventListener("error", () => {
+          if (!isActiveRef.current) return;
           setStatus("error");
           setErrorCode("WS_CONNECTION_ERROR");
+          console.log("WebSocket connection error");
         });
         socket.addEventListener("close", () => {
+          console.log("WebSocket connection closed");
+          if (!isActiveRef.current) return;
           setStatus("closed");
-          
           if (reconnectTimeoutRef.current) {
             clearTimeout(reconnectTimeoutRef.current);
           }
           reconnectTimeoutRef.current = setTimeout(() => {
+            if (!isActiveRef.current) return;
             connectWithHandlers();
           }, 3000);
+          console.log("WebSocket connection reconnected");
         });
       }
     };
@@ -81,6 +91,7 @@ export function useWebSocket({ url }: UseWebSocketOptions): UseWebSocketResult {
     connectWithHandlers();
 
     return () => {
+      isActiveRef.current = false;
       if (reconnectTimeoutRef.current) {
         clearTimeout(reconnectTimeoutRef.current);
       }
