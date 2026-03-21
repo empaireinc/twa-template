@@ -40,28 +40,44 @@ body {
 
 .page-title__details {
   margin-top: 16px;
-  min-height: 72px; /* зарезервированное место под сообщения/активность */
+  display: grid;
+  grid-template-rows: 40px 56px;
+  row-gap: 8px;
+}
+
+.page-title__details--home {
+  grid-template-rows: 52px 72px;
+}
+
+.page-title__details--page1 {
+  grid-template-rows: 40px 56px;
+}
+
+.page-title__row {
+  min-height: 0;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 
 .greeting__auth-message {
-  margin-top: 20px;
+  margin-top: 0;
   font-size: 18px;
   font-weight: normal;
   color: var(--tg-theme-text-color, #000000);
 }
 
 .greeting__auth-error {
-  margin-top: 20px;
+  margin-top: 0;
   font-size: 18px;
   font-weight: normal;
   color: var(--tg-theme-hint-color, #c62828);
 }
 
 .greeting__activity {
-  margin-top: 16px;
+  margin-top: 0;
   font-size: 14px;
   font-weight: normal;
   color: var(--tg-theme-hint-color, #666666);
